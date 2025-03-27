@@ -1,0 +1,460 @@
+<?xml version="1.0"?>
+<!-- Body coordinates are: x forward, y left, z up; rotation is: roll right, pitch forward, yaw left -->
+<!-- See http://www.ros.org/reps/rep-0103.html -->
+
+<robot name="tello">
+
+
+    <!-- Materials -->
+    <material name="gray">
+        <color rgba="0.5 0.5 0.5 1.0"/>
+    </material>
+    <material name="white">
+        <color rgba="0.9 0.9 0.9 1.0"/>
+    </material>
+    <material name="red">
+        <color rgba="1.0 0 0 1.0"/>
+    </material>
+    <!-- TODO add Gazebo color information -->
+
+    <!-- Base link -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.57 0 -1.57"/>
+            <geometry>
+                <mesh filename="file:///$(find tello_description)/urdf/tello_v2.stl" scale="0.0015 0.0015 0.0015" />
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <visual>
+            <origin xyz="0 0 0" rpy="1.57 0 -1.57"/>
+            <geometry>
+                <mesh filename="file:///$(find tello_description)/urdf/tello_cover.stl" scale="0.0015 0.0015 0.0015" />
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <visual>
+            <origin xyz="0.060 -0.065 0"/>
+            <geometry>
+                <cylinder length="0.025" radius="0.005"/>
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <visual>
+            <origin xyz="-0.060 0.065 0"/>
+            <geometry>
+                <cylinder length="0.025" radius="0.005"/>
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <visual>
+            <origin xyz="0.060 0.065 0"/>
+            <geometry>
+                <cylinder length="0.025" radius="0.005"/>
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <visual>
+            <origin xyz="-0.060 -0.065 0"/>
+            <geometry>
+                <cylinder length="0.025" radius="0.005"/>
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <inertial>
+            <mass value="0.088"/>
+            <!-- Tensor for solid cuboid 18cm x 18cm x 5cm high -->
+            <inertia ixx="0.00679" ixy="0" ixz="0" iyy="0.00679" iyz="0" izz="0.01313"/>
+        </inertial>
+        <collision name="collision">
+            <geometry>
+                <box size="0.09 0.09 0.020"/>
+            </geometry>
+            <surface>
+                <friction>
+                    <ode>
+                        <mu>0.2</mu>
+                        <mu2>0.2</mu2>
+                    </ode>
+                </friction>
+            </surface>
+        </collision>
+    </link>
+
+    <!-- Propeller links -->
+    <link name="propeller1">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///$(find tello_description)/urdf/prop.stl" scale="1.0 1.0 1.0" />
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <inertial>
+            <mass value="0.005"/>
+            <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00002"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <cylinder length="0.005" radius="0.04"/>
+            </geometry>
+        </collision>
+    </link>
+    <link name="propeller2">
+       <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///$(find tello_description)/urdf/prop.stl" scale="1.0 1.0 1.0" />
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <inertial>
+            <mass value="0.005"/> 
+            <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00002"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <cylinder length="0.005" radius="0.04"/>
+            </geometry>
+        </collision>
+    </link>
+    <link name="propeller3">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///$(find tello_description)/urdf/prop.stl" scale="1.0 1.0 1.0" />
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <inertial>
+            <mass value="0.005"/> 
+            <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00002"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <cylinder length="0.005" radius="0.04"/>
+            </geometry>
+        </collision>
+    </link>
+    <link name="propeller4">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///$(find tello_description)/urdf/prop.stl" scale="1.0 1.0 1.0" />
+            </geometry>
+            <material name="gray"/>
+        </visual>
+        <inertial>
+            <mass value="0.005"/>
+            <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00002"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <cylinder length="0.005" radius="0.04"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="propeller1_joint" type="continuous">
+        <origin xyz="0.060 -0.065 0.0155" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="propeller1"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    <joint name="propeller2_joint" type="continuous">
+        <origin xyz="-0.060 0.065 0.0155" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="propeller2"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    <joint name="propeller3_joint" type="continuous">
+        <origin xyz="0.060 0.065 0.0155" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="propeller3"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+    <joint name="propeller4_joint" type="continuous">
+        <origin xyz="-0.060 -0.065 0.0155" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="propeller4"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <gazebo>
+        <plugin name='gz::sim::systems::MulticopterMotorModel' filename='ignition-gazebo-multicopter-motor-model-system'>
+            <robotNamespace>tello</robotNamespace>
+            <jointName>propeller1_joint</jointName>
+            <linkName>propeller1</linkName>
+            <turningDirection>ccw</turningDirection>
+            <timeConstantUp>0.0125</timeConstantUp>
+            <timeConstantDown>0.025</timeConstantDown>
+            <maxRotVelocity>300.0</maxRotVelocity>
+            <motorConstant>8.54858e-06</motorConstant>
+            <momentConstant>0.016</momentConstant>
+            <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+            <motorNumber>0</motorNumber>
+            <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+            <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+            <motorSpeedPubTopic>motor_speed/0</motorSpeedPubTopic>
+            <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+            <motorType>velocity</motorType>
+        </plugin>
+        <plugin name='gz::sim::systems::MulticopterMotorModel' filename='ignition-gazebo-multicopter-motor-model-system'>
+            <robotNamespace>tello</robotNamespace>
+            <jointName>propeller2_joint</jointName>
+            <linkName>propeller2</linkName>
+            <turningDirection>ccw</turningDirection>
+            <timeConstantUp>0.0125</timeConstantUp>
+            <timeConstantDown>0.025</timeConstantDown>
+            <maxRotVelocity>300.0</maxRotVelocity>
+            <motorConstant>8.54858e-06</motorConstant>
+            <momentConstant>0.016</momentConstant>
+            <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+            <motorNumber>1</motorNumber>
+            <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+            <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+            <motorSpeedPubTopic>motor_speed/1</motorSpeedPubTopic>
+            <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+            <motorType>velocity</motorType>
+        </plugin>
+        <plugin name='gz::sim::systems::MulticopterMotorModel' filename='ignition-gazebo-multicopter-motor-model-system'>
+            <robotNamespace>tello</robotNamespace>
+            <jointName>propeller3_joint</jointName>
+            <linkName>propeller3</linkName>
+            <turningDirection>cw</turningDirection>
+            <timeConstantUp>0.0125</timeConstantUp>
+            <timeConstantDown>0.025</timeConstantDown>
+            <maxRotVelocity>300.0</maxRotVelocity>
+            <motorConstant>8.54858e-06</motorConstant>
+            <momentConstant>0.016</momentConstant>
+            <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+            <motorNumber>2</motorNumber>
+            <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+            <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+            <motorSpeedPubTopic>motor_speed/2</motorSpeedPubTopic>
+            <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+            <motorType>velocity</motorType>
+        </plugin>
+        <plugin name='gz::sim::systems::MulticopterMotorModel' filename='ignition-gazebo-multicopter-motor-model-system'>
+            <robotNamespace>tello</robotNamespace>
+            <jointName>propeller4_joint</jointName>
+            <linkName>propeller4</linkName>
+            <turningDirection>cw</turningDirection>
+            <timeConstantUp>0.0125</timeConstantUp>
+            <timeConstantDown>0.025</timeConstantDown>
+            <maxRotVelocity>300.0</maxRotVelocity>
+            <motorConstant>8.54858e-06</motorConstant>
+            <momentConstant>0.016</momentConstant>
+            <commandSubTopic>gazebo/command/motor_speed</commandSubTopic>
+            <motorNumber>3</motorNumber>
+            <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
+            <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+            <motorSpeedPubTopic>motor_speed/3</motorSpeedPubTopic>
+            <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+            <motorType>velocity</motorType>
+        </plugin>
+
+        <plugin filename="ignition-gazebo-joint-state-publisher-system" name="ignition::gazebo::systems::JointStatePublisher">
+            <update_rate>100</update_rate>
+            <joint_name>propeller1_joint</joint_name>
+            <joint_name>propeller2_joint</joint_name>
+            <joint_name>propeller3_joint</joint_name>
+            <joint_name>propeller4_joint</joint_name>
+        </plugin>
+
+        <plugin name='gz::sim::systems::MulticopterVelocityControl' filename='ignition-gazebo-multicopter-control-system'>
+            <robotNamespace>tello</robotNamespace>
+            <commandSubTopic>cmd_vel</commandSubTopic>
+            <enableSubTopic>enable</enableSubTopic>
+            <comLinkName>base_link</comLinkName>
+            <velocityGain>1 1 1</velocityGain>
+            <attitudeGain>0.2 0.3 0.15</attitudeGain>
+            <angularRateGain>0.04 0.22 0.018</angularRateGain>
+            <maximumLinearAcceleration>2 2 2</maximumLinearAcceleration>
+            <rotorConfiguration>
+            <rotor>
+                <jointName>propeller1_joint</jointName>
+                <forceConstant>8.54858e-06</forceConstant>
+                <momentConstant>0.016</momentConstant>
+                <direction>1</direction>
+            </rotor>
+            <rotor>
+                <jointName>propeller2_joint</jointName>
+                <forceConstant>8.54858e-06</forceConstant>
+                <momentConstant>0.016</momentConstant>
+                <direction>1</direction>
+            </rotor>
+            <rotor>
+                <jointName>propeller3_joint</jointName>
+                <forceConstant>8.54858e-06</forceConstant>
+                <momentConstant>0.016</momentConstant>
+                <direction>-1</direction>
+            </rotor>
+            <rotor>
+                <jointName>propeller4_joint</jointName>
+                <forceConstant>8.54858e-06</forceConstant>
+                <momentConstant>0.016</momentConstant>
+                <direction>-1</direction>
+            </rotor>
+            </rotorConfiguration>
+        </plugin>
+
+        <sensor name="imu_sensor" type="imu">
+            <topic>/model/tello/imu</topic>
+            <frame_id>base_link</frame_id>
+            <ignition_frame_id>base_link</ignition_frame_id>
+            <plugin filename="libignition-gazebo-imu-system.so" name="ignition::gazebo::systems::Imu">
+                <initial_orientation_as_reference>false</initial_orientation_as_reference>
+            </plugin>
+            <always_on>true</always_on>
+            <update_rate>200</update_rate>
+            <visualize>true</visualize>
+            <imu>
+                <angular_velocity>
+                <x>
+                    <noise type="gaussian">
+                    <mean>0.0</mean>
+                    <stddev>2e-4</stddev>
+                    <bias_mean>0.0000075</bias_mean>
+                    <bias_stddev>0.0000008</bias_stddev>
+                    </noise>
+                </x>
+                <y>
+                    <noise type="gaussian">
+                    <mean>0.0</mean>
+                    <stddev>2e-4</stddev>
+                    <bias_mean>0.0000075</bias_mean>
+                    <bias_stddev>0.0000008</bias_stddev>
+                    </noise>
+                </y>
+                <z>
+                    <noise type="gaussian">
+                    <mean>0.0</mean>
+                    <stddev>2e-4</stddev>
+                    <bias_mean>0.0000075</bias_mean>
+                    <bias_stddev>0.0000008</bias_stddev>
+                    </noise>
+                </z>
+                </angular_velocity>
+                <linear_acceleration>
+                <x>
+                    <noise type="gaussian">
+                    <mean>0.0</mean>
+                    <stddev>1.7e-2</stddev>
+                    <bias_mean>0.1</bias_mean>
+                    <bias_stddev>0.001</bias_stddev>
+                    </noise>
+                </x>
+                <y>
+                    <noise type="gaussian">
+                    <mean>0.0</mean>
+                    <stddev>1.7e-2</stddev>
+                    <bias_mean>0.1</bias_mean>
+                    <bias_stddev>0.001</bias_stddev>
+                    </noise>
+                </y>
+                <z>
+                    <noise type="gaussian">
+                    <mean>0.0</mean>
+                    <stddev>1.7e-2</stddev>
+                    <bias_mean>0.1</bias_mean>
+                    <bias_stddev>0.001</bias_stddev>
+                    </noise>
+                </z>
+                </linear_acceleration>
+            </imu>
+        </sensor>
+    </gazebo>
+
+    <!--
+    <transmission name="propeller1_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="propeller1_joint"/>
+        <actuator name="propeller1_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="propeller2_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="propeller2_joint"/>
+        <actuator name="propeller2_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="propeller3_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="propeller3_joint"/>
+        <actuator name="propeller3_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="propeller4_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="propeller4_joint"/>
+        <actuator name="propeller4_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <gazebo reference="base_link">
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+            <visualize>true</visualize>
+            <topic>imu/data</topic>
+            <plugin filename="file:///$(find tello_description)/urdf/libgz-sensors-imu.so" name="imu_plugin">
+                <gz_imu>
+                    <noise type="gaussian">
+                        <mean>0.0</mean>
+                        <stddev>0.00017</stddev> 
+                    </noise>
+                </gz_imu>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <gazebo>
+        <plugin filename="libgz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <parameters>$(find tello_description)/config/tello_controllers.yaml</parameters>
+                <ros>
+                    <remapping>/controller_manager/robot_description:=/robot_description</remapping>
+                </ros>
+        </plugin>
+    </gazebo>
+
+    <ros2_control name="tello_control" type="system">
+    <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        <param name="robot_description">/robot_description</param>
+    </hardware>
+    
+    <joint name="propeller1_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+    </joint>
+    
+    <joint name="propeller2_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+    </joint>
+    
+    <joint name="propeller3_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+    </joint>
+    
+    <joint name="propeller4_joint">
+        <command_interface name="velocity"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+    </joint>
+    </ros2_control>
+    -->
+
+</robot>
