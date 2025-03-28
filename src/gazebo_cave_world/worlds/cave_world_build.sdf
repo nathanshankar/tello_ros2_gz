@@ -1,0 +1,823 @@
+<sdf version='1.10'>
+  <world name='empty'>
+    <physics name='1ms' type='ignored'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <plugin name='gz::sim::systems::Physics' filename='gz-sim-physics-system'/>
+    <plugin name='gz::sim::systems::UserCommands' filename='gz-sim-user-commands-system'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='gz-sim-scene-broadcaster-system'/>
+    <plugin name='gz::sim::systems::Contact' filename='gz-sim-contact-system'/>
+    <plugin
+      filename="gz-sim-sensors-system"
+      name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <gravity>0 0 -9.8000000000000007</gravity>
+    <magnetic_field>5.5644999999999998e-06 2.2875799999999999e-05 -4.2388400000000002e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <scene>
+      <ambient>0.400000006 0.400000006 0.400000006 1</ambient>
+      <background>0.699999988 0.699999988 0.699999988 1</background>
+      <shadows>false</shadows>
+    </scene>
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.800000012 0.800000012 0.800000012 1</ambient>
+            <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+            <specular>0.800000012 0.800000012 0.800000012 1</specular>
+          </material>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='cave'>
+      <static>true</static>
+      <link name='base_link'>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='CaveWall_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>CaveWall</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/CaveWall_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/CaveWall_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Stalagmite_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Stalagmite</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Stalagmite_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Stalagmite_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Tower_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Tower</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Tower_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Tower_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Rocks_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Rocks</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Rocks_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Rocks_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='RockPile_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>RockPile</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/RockPile_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/RockPile_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 2.7755575615628914e-17 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-6.3916897773742676 -4.9754900932312012 0.20000000298023224 0 -0.0071904821649766042 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='cave_1'>
+      <static>true</static>
+      <link name='base_link'>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='CaveWall_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>CaveWall</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/CaveWall_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/CaveWall_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Stalagmite_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Stalagmite</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Stalagmite_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Stalagmite_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Tower_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Tower</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Tower_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Tower_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Rocks_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Rocks</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Rocks_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Rocks_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='RockPile_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>RockPile</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/RockPile_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/RockPile_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 2.7755575615628914e-17 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5.6420700000000004 -2.76383 0.20000000000000001 0 0 -2.6705399999999999</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='cave_2'>
+      <static>true</static>
+      <link name='base_link'>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='CaveWall_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>CaveWall</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/CaveWall_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/CaveWall_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Stalagmite_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Stalagmite</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Stalagmite_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Stalagmite_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Tower_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Tower</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Tower_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Tower_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Rocks_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Rocks</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Rocks_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Rocks_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='RockPile_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>RockPile</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/RockPile_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/RockPile_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 2.7755575615628914e-17 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>21.689735412597656 15.713275909423828 0.20000000298023224 0 0 -3.112909999631166</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='cave_3'>
+      <static>true</static>
+      <link name='base_link'>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='CaveWall_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>CaveWall</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/CaveWall_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/CaveWall_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Stalagmite_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Stalagmite</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Stalagmite_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Stalagmite_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Tower_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Tower</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Tower_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Tower_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='Rocks_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>Rocks</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Rocks_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/Rocks_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='RockPile_visual'>
+          <geometry>
+            <mesh>
+              <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/meshes/cave.dae</uri>
+              <submesh>
+                <name>RockPile</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/RockPile_Albedo.png</albedo_map>
+                <normal_map>https://fuel.gazebosim.org/1.0/openrobotics/models/cave/3/files/materials/textures/RockPile_Normal.png</normal_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 2.7755575615628914e-17 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>25.658329010009766 -11.553073883056641 0.20000000298023224 0 0 1.812899999080108</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall</name>
+      <pose>19.970009974046818 20.798038890703392 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_1</name>
+      <pose>13.042675479059007 20.783799587441543 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_0</name>
+      <pose>12.176755905151367 10.418883323669434 0 0 0 0.40519202526457437</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_2</name>
+      <pose>11.503100395202637 17.682899475097656 0 0 0 -0.9816080171484487</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_2_1</name>
+      <pose>13.484859536288276 14.850497328956685 0 0 0 -0.98160803386493389</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_3</name>
+      <pose>5.2628335952758789 9.5196952819824219 0 0 0 -0.18319200629428073</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_4</name>
+      <pose>-2.0775566200613356 10.204195520761093 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_5</name>
+      <pose>-8.206233024597168 7.504549503326416 0 0 0 0.80069001655536609</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_6</name>
+      <pose>-10.678757667541504 1.1106743812561035 0 0 0 1.5857199899124541</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_6_1</name>
+      <pose>-10.536233516999253 -6.322925450077598 0 0 0 1.5857200114384991</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_7</name>
+      <pose>-6.8324537316662228 -9.9648081643529771 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_8</name>
+      <pose>-2.5663414001464844 -18.641315460205078 0 0 0 -1.0913499768866721</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_9</name>
+      <pose>-1.6391425132751465 -12.681662559509277 0 0 0 0.79850601067871352</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_10</name>
+      <pose>-2.8328685317937099 -9.9775229805983052 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_11</name>
+      <pose>2.5216577053070068 -20.607730865478516 0 0 0 0.37315398656036586</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_12</name>
+      <pose>9.5520105361938477 -18.724245071411133 0 0 0 0.16958699618233192</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_12_1</name>
+      <pose>16.674291331908012 -17.531559941564776 -2.2204460492503131e-16 0 0 0.16958700506610541</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_12_2</name>
+      <pose>23.977356088749502 -16.270221447983072 -2.2204460492503131e-16 0 0 0.16958700506610541</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_13</name>
+      <pose>29.440935134887695 -12.534186363220215 0 0 0 1.0137299673905102</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_14</name>
+      <pose>29.830877304077148 -6.9617366790771484 0 0 0 -1.3593500207785503</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_14_2</name>
+      <pose>26.835864780489231 6.7689724776619853 0 0 0 -1.3593499679065733</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_14_3</name>
+      <pose>25.33364951478881 13.828070896703865 0 0 0 -1.3593499679065733</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_14_4</name>
+      <pose>24.591945410212432 17.286460148309352 0 0 0 -1.3593499679065733</pose>
+    </include>
+    <model name='box'>
+      <pose>9.3538913186238855 -5.3748046584795031 0.69193819282088576 0.095435789921697212 0.047946149258808003 0.33657200531025305</pose>
+      <link name='box_link'>
+        <inertial>
+          <inertia>
+            <ixx>0.16666</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.16666</iyy>
+            <iyz>0</iyz>
+            <izz>0.16666</izz>
+          </inertia>
+          <mass>1</mass>
+          <pose>0 0 0 0 0 0</pose>
+        </inertial>
+        <collision name='box_collision'>
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='box_visual'>
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.300000012 0.300000012 0.300000012 1</ambient>
+            <diffuse>0.699999988 0.699999988 0.699999988 1</diffuse>
+            <specular>1 1 1 1</specular>
+          </material>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_15</name>
+      <pose>23.826799392700195 3.0008699893951416 0 0 0 -0.0045283969054827717</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_16</name>
+      <pose>17.609405517578125 -0.066200397908687592 0 0 0 -1.2723399395476132</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_17</name>
+      <pose>25.14822830318392 -3.4862040316248502 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_18</name>
+      <pose>22.432970399201519 -3.4890941983411494 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>file:///home/nathan/.gz/fuel/fuel.gazebosim.org/openrobotics/models/grey wall/3</uri>
+      <name>grey_wall_19</name>
+      <pose>20.195085094556497 3.052464783853333 0 0 0 0</pose>
+    </include>
+    <!--
+    <light name='sun' type='directional'>
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <intensity>1</intensity>
+      <direction>-0.5 0.10000000000000001 -0.90000000000000002</direction>
+      <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+      <specular>0.200000003 0.200000003 0.200000003 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <linear>0.0099999997764825821</linear>
+        <constant>0.89999997615814209</constant>
+        <quadratic>0.0010000000474974513</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    -->
+  </world>
+</sdf>
