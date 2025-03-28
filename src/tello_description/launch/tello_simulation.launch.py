@@ -98,7 +98,7 @@ def generate_launch_description():
         remappings= [
                     ('/world/empty/model/tello/joint_state', 'joint_states'),
                     ('/ircam1', '/ircam1/image_raw'),
-                    ('/ircam1/points', '/ircam1/points'),
+                    ('/ircam1/points', '/points'),
                     ('/tello/cmd_vel', '/cmd_vel'),
                     ('/tello/imu', '/imu'),
                     ('/tello/odometry', '/odom'),
@@ -106,22 +106,7 @@ def generate_launch_description():
                     ],
         output='screen'
     )
-    # Remap the frame_id of the IMU topic
-    # Remap multiple frames using static_transform_publisher
-    node_frame_remaps = [
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            arguments=['0', '0', '0', '0', '0', '0', 'base_link', 'tello/base_link/imu_sensor'],
-            output='screen'
-        ),
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            arguments=['0', '0', '0', '0', '0', '0', 'base_link', 'tello/base_link/depth_camera'],
-            output='screen'
-        )
-    ]
+    
     
     # Add actions to LaunchDescription
     ld.add_action(SetParameter(name='use_sim_time', value=True))
@@ -129,11 +114,5 @@ def generate_launch_description():
     ld.add_action(node_spawn_entity)
     ld.add_action(node_robot_state_publisher)
     ld.add_action(node_ros_gz_bridge)
-    # ld.add_action(node_joint_state_publisher)
-    for node in node_frame_remaps:
-        ld.add_action(node)
     ld.add_action(node_rviz)
-    # ld.add_action(node_controller_manager)
-    # ld.add_action(node_spawner)
-    # ld.add_action(node_joint_state_broadcaster)
     return ld
