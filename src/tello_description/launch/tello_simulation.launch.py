@@ -20,18 +20,26 @@ def generate_launch_description():
     robot_description_raw = xacro.process_file(xacro_file).toxml()
 
     # Launch world
+    # gz_start_world = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([get_package_share_directory('ros_gz_sim'), '/launch', '/gz_sim.launch.py']),
+    #     launch_arguments={
+    #         'gz_args' : '-r ' + 'empty.sdf'
+    #         }.items(),
+    # )
     gz_start_world = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([get_package_share_directory('ros_gz_sim'), '/launch', '/gz_sim.launch.py']),
-        launch_arguments={
-            'gz_args' : '-r ' + 'empty.sdf'
-            }.items(),
+        PythonLaunchDescriptionSource([get_package_share_directory('gazebo_cave_world'), '/launch', '/cave_world.launch.py'])
     )
     
     # Run the spawner node from the gazebo_ros package. The entity name doesn't really matter if you only have a single robot.
     node_spawn_entity = Node(package='ros_gz_sim', executable='create',
                         arguments=['-name', 'tello',
                                    '-topic', '/robot_description',
-                                   '-z', '1.0'],
+                                    '-x', '-6.65',
+                                    '-y', '-8.92',
+                                    '-z', '0.5',
+                                    '-R', '-0.04',
+                                    '-P', '0.07',
+                                    '-Y', '1.59',],
                         output='screen')
 
     # robot state publisher node
@@ -79,18 +87,41 @@ def generate_launch_description():
         arguments=  [
                     '/clock'                           + '@rosgraph_msgs/msg/Clock'   + '[' + 'gz.msgs.Clock',
                     '/world/empty/model/tello/joint_state' + '@sensor_msgs/msg/JointState' + '[' + 'gz.msgs.Model',
-                    '/model/tello/imu'                  + '@sensor_msgs/msg/Imu'       + '[' + 'gz.msgs.IMU',
+                    '/ircam1'                               + '@sensor_msgs/msg/Image'      + '[' + 'ignition.msgs.Image',
+                    '/ircam1/points'                    + '@sensor_msgs/msg/PointCloud2' + '[' + 'ignition.msgs.PointCloudPacked',
                     '/tello/cmd_vel'                    + '@geometry_msgs/msg/Twist'   + '@' + 'gz.msgs.Twist',
+                    '/tello/imu'                  + '@sensor_msgs/msg/Imu'       + '[' + 'gz.msgs.IMU',
+                    '/tello/odometry'                  + '@nav_msgs/msg/Odometry'    + '[' + 'gz.msgs.Odometry',
+                    '/tello/tf'                 + '@tf2_msgs/msg/TFMessage'    + '[' + 'gz.msgs.Pose_V',                    
                     ],
         parameters= [{'qos_overrides./tello.subscriber.reliability': 'reliable'},{'qos_overrides./tello.subscriber.durability': 'transient_local'}],
         remappings= [
                     ('/world/empty/model/tello/joint_state', 'joint_states'),
-                    ('/model/tello/imu', '/imu'),
+                    ('/ircam1', '/ircam1/image_raw'),
+                    ('/ircam1/points', '/ircam1/points'),
                     ('/tello/cmd_vel', '/cmd_vel'),
+                    ('/tello/imu', '/imu'),
+                    ('/tello/odometry', '/odom'),
+                    ('/tello/tf', '/tf')  
                     ],
         output='screen'
     )
-
+    # Remap the frame_id of the IMU topic
+    # Remap multiple frames using static_transform_publisher
+    node_frame_remaps = [
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            arguments=['0', '0', '0', '0', '0', '0', 'base_link', 'tello/base_link/imu_sensor'],
+            output='screen'
+        ),
+        Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            arguments=['0', '0', '0', '0', '0', '0', 'base_link', 'tello/base_link/depth_camera'],
+            output='screen'
+        )
+    ]
     
     # Add actions to LaunchDescription
     ld.add_action(SetParameter(name='use_sim_time', value=True))
@@ -99,6 +130,8 @@ def generate_launch_description():
     ld.add_action(node_robot_state_publisher)
     ld.add_action(node_ros_gz_bridge)
     # ld.add_action(node_joint_state_publisher)
+    for node in node_frame_remaps:
+        ld.add_action(node)
     ld.add_action(node_rviz)
     # ld.add_action(node_controller_manager)
     # ld.add_action(node_spawner)
