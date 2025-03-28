@@ -268,10 +268,10 @@
             <commandSubTopic>cmd_vel</commandSubTopic>
             <enableSubTopic>enable</enableSubTopic>
             <comLinkName>base_link</comLinkName>
-            <velocityGain>1 1 1</velocityGain>
-            <attitudeGain>0.2 0.3 0.15</attitudeGain>
-            <angularRateGain>0.04 0.22 0.018</angularRateGain>
-            <maximumLinearAcceleration>2 2 2</maximumLinearAcceleration>
+            <velocityGain>0.6 0.8 2.3</velocityGain>
+            <attitudeGain>0.1 0.3 0.05</attitudeGain>
+            <angularRateGain>0.2 0.15 0.01</angularRateGain>
+            <maximumLinearAcceleration>1 1 2</maximumLinearAcceleration>
             <rotorConfiguration>
             <rotor>
                 <jointName>propeller1_joint</jointName>
